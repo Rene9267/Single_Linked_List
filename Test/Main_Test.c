@@ -1,0 +1,86 @@
+#include <SLL_Cunit.h>
+#include <Singly_Linked_List.h>
+
+#pragma region TEST_APPEND_ITEMS
+
+CUNIT_TEST(Test_AppendOneItem)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item = "Hello World";
+
+    // 2. stimolate
+    SLL_Append(&temp_list, (char *)item, sizeof(singly_node_t));
+
+    // 3. expectation
+    const char *actual_value = temp_list->data;
+    const char *expected_value = item;
+
+    CUNIT_STRING_EQ(expected_value, actual_value);
+}
+
+CUNIT_TEST(Test_AppendMoreItem)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item_1 = "Hello World";
+    const char *item_2 = "Hello Spank";
+
+    // 2. stimolate
+    SLL_Append(&temp_list, (char *)item_1, sizeof(singly_node_t));
+    SLL_Append(&temp_list, (char *)item_2, sizeof(singly_node_t));
+
+    // 3. expectation
+    // 1) element
+    const char *actual_value = temp_list->data;
+    const char *expected_value = item_1;
+    CUNIT_STRING_EQ(expected_value, actual_value);
+
+    // 2) element
+    actual_value = temp_list->linked_node->data;
+    expected_value = item_2;
+    CUNIT_STRING_EQ(expected_value, actual_value);
+}
+
+#pragma endregion
+
+
+
+CUNIT_RUNNER(Test_AppendOneItem, Test_AppendMoreItem);
+// int main()
+// {
+//     // singly_node_t * head = NULL;
+//     // Append(&head, "Primo");
+//     // Append(&head, "Secondo");
+//     // Append(&head, "Terzo");
+//     // Append(&head, "Quarto");
+//     // Append(&head, "Quinto");
+//     // Append(&head, "Sesto");
+//     // Append(&head, "Last append");
+
+//     // printf("%s\n", (char *)(head)->data);
+//     // printf("Get Tail: %s\n", (char *)Get_Tail(&head)->data);
+//     // printf("%s\n", (char *)Pop_First(&head));
+//     // printf("%s\n", (char *)(head)->data);
+//     // printf("Remove: %s\n", (char *)Remove(&head, 0));
+//     // printf("%s\n", (char *)(head)->linked_node->data);
+//     // printf("%s\n", (char *)(((struct list_node *)Pop_Last(&head)->data)));
+//     // printf("%s\n", (char *)(((struct list_node *)Pop_Last(&head)->data)));
+
+//     // singly_node_t * prova = head;
+//     // while (prova)
+//     // {
+//     //     printf("%s\n", (char *)prova->data);
+//     //     prova = prova->linked_node;
+//     // }
+
+//     // singly_node_t * reverted = Revert(&head);
+//     // singly_node_t * Revert_head = reverted;
+//     // while (Revert_head)
+//     // {
+//     //     printf("%s\n", (char *)Revert_head->data);
+//     //     Revert_head = Revert_head->linked_node;
+//     // }
+
+//     return 0;
+// }
