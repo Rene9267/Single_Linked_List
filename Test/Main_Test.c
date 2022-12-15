@@ -46,6 +46,8 @@ CUNIT_TEST(Test_AppendMoreItem)
 
 #pragma region TEST_POP_ITEM
 
+#pragma region POP_BOTTOM
+
 CUNIT_TEST(Test_PopBottomFromOneItem)
 {
     // 1. Setup scenario
@@ -92,6 +94,57 @@ CUNIT_TEST(Test_PopBottomFromTwoItems)
     CUNIT_STRING_EQ(item_2, (char *)popped_node->data); // check the popped item
     CUNIT_STRING_EQ(item_1, (char *)temp_list->data);   // check the remaining
 }
+#pragma endregion
+
+#pragma region POP_TOP
+
+CUNIT_TEST(Test_PoTopFromOneItem)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item = "Hello World";
+    SLL_Append(&temp_list, (char *)item, sizeof(singly_node_t));
+
+    // 2. stimolate
+    singly_node_t *popped_node = SLL_PopTop(&temp_list);
+
+    // 3. expectation
+    const char *actual_value = popped_node->data;
+    const char *expected_value = item;
+    CUNIT_STRING_EQ(expected_value, actual_value); // check if remove correct item
+    CUNIT_IS_NULL(temp_list);                      // check if the list is empty
+}
+
+CUNIT_TEST(Test_PopTopFromNullList)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+
+    // 2. stimolate
+    singly_node_t *popped_node = SLL_PopTop(&temp_list);
+
+    // 3. expectation
+    CUNIT_IS_NULL(temp_list);   // check if the list is empty
+    CUNIT_IS_NULL(popped_node); // check if the popped node is empty
+}
+
+CUNIT_TEST(Test_PopTopFromTwoItems)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item_1 = "Hello World";
+    const char *item_2 = "Hello Spank";
+    SLL_Append(&temp_list, (char *)item_1, sizeof(singly_node_t));
+    SLL_Append(&temp_list, (char *)item_2, sizeof(singly_node_t));
+
+    // 2. stimolate
+    singly_node_t *popped_node = SLL_PopTop(&temp_list);
+
+    // 3. expectation
+    CUNIT_STRING_EQ(item_1, (char *)popped_node->data); // check the popped item
+    CUNIT_STRING_EQ(item_2, (char *)temp_list->data);   // check the remaining
+}
+#pragma endregion
 
 #pragma endregion
 
@@ -172,41 +225,54 @@ CUNIT_TEST(Test_RemoveFromTwoItemList)
 
 #pragma endregion
 
-CUNIT_RUNNER(Test_AppendOneItem, Test_AppendMoreItem, Test_PopBottomFromOneItem, Test_PopBottomFromNullList, Test_PopBottomFromTwoItems, Test_RemoveFromEmptyList, Test_RemoveOutOfRangeItem, Test_RemoveFromOneItemList, Test_RemoveFromTwoItemList);
-// int main()
-// {
-//     // singly_node_t * head = NULL;
-//     // Append(&head, "Primo");
-//     // Append(&head, "Secondo");
-//     // Append(&head, "Terzo");
-//     // Append(&head, "Quarto");
-//     // Append(&head, "Quinto");
-//     // Append(&head, "Sesto");
-//     // Append(&head, "Last append");
+#pragma region TEST_GET_TAIL
 
-//     // printf("%s\n", (char *)(head)->data);
-//     // printf("Get Tail: %s\n", (char *)Get_Tail(&head)->data);
-//     // printf("%s\n", (char *)Pop_First(&head));
-//     // printf("%s\n", (char *)(head)->data);
-//     // printf("Remove: %s\n", (char *)Remove(&head, 0));
-//     // printf("%s\n", (char *)(head)->linked_node->data);
-//     // printf("%s\n", (char *)(((struct list_node *)Pop_Last(&head)->data)));
-//     // printf("%s\n", (char *)(((struct list_node *)Pop_Last(&head)->data)));
+CUNIT_TEST(Test_GetTailEmpty)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
 
-//     // singly_node_t * prova = head;
-//     // while (prova)
-//     // {
-//     //     printf("%s\n", (char *)prova->data);
-//     //     prova = prova->linked_node;
-//     // }
+    // 2. stimolate
+    singly_node_t *last_node = SLL_GetTail(&temp_list);
 
-//     // singly_node_t * reverted = Revert(&head);
-//     // singly_node_t * Revert_head = reverted;
-//     // while (Revert_head)
-//     // {
-//     //     printf("%s\n", (char *)Revert_head->data);
-//     //     Revert_head = Revert_head->linked_node;
-//     // }
+    // 3. expectation
+    CUNIT_IS_NULL(last_node);
+}
 
-//     return 0;
-// }
+CUNIT_TEST(Test_GetTailOneItem)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item = "Hello World";
+    SLL_Append(&temp_list, (char *)item, sizeof(temp_list));
+
+    // 2. stimolate
+    singly_node_t *last_node = SLL_GetTail(&temp_list);
+
+    // 3. expectation
+    const char *actual_value = last_node->data;
+    const char *expected_value = item;
+    CUNIT_STRING_EQ(expected_value, actual_value);
+}
+
+CUNIT_TEST(Test_GetTailTwoItem)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item = "Hello World";
+    const char *item2 = "Hello Spank";
+    SLL_Append(&temp_list, (char *)item, sizeof(temp_list));
+    SLL_Append(&temp_list, (char *)item2, sizeof(temp_list));
+
+    // 2. stimolate
+    singly_node_t *last_node = SLL_GetTail(&temp_list);
+
+    // 3. expectation
+    const char *actual_value = last_node->data;
+    const char *expected_value = item2;
+    CUNIT_STRING_EQ(expected_value, actual_value);
+}
+
+#pragma endregion
+
+CUNIT_RUNNER(Test_GetTailEmpty, Test_GetTailTwoItem, Test_GetTailOneItem, Test_AppendOneItem, Test_AppendMoreItem, Test_PopBottomFromOneItem, Test_PopBottomFromTwoItems, Test_RemoveFromEmptyList, Test_PoTopFromOneItem, Test_RemoveOutOfRangeItem, Test_RemoveFromOneItemList, Test_PopTopFromNullList, Test_RemoveFromTwoItemList, Test_PopTopFromTwoItems, Test_PopBottomFromNullList);

@@ -9,9 +9,9 @@
         }                                          \
     }
 
-singly_node_t *Get_Tail(singly_node_t **head)
+singly_node_t *SLL_GetTail(singly_node_t **head)
 {
-    if (!*head)
+    if (!head || !*head)
         return NULL;
 
     singly_node_t *current_node = *head;
@@ -27,7 +27,7 @@ singly_node_t *Get_Tail(singly_node_t **head)
 
 int SLL_Append(singly_node_t **head, void *item, size_t struct_type)
 {
-    singly_node_t *current_node = Get_Tail(head);
+    singly_node_t *current_node = SLL_GetTail(head);
     singly_node_t *appended_node = malloc(struct_type);
     NULL_CHECK(appended_node);
     appended_node->data = item;
@@ -42,9 +42,9 @@ int SLL_Append(singly_node_t **head, void *item, size_t struct_type)
     return 1;
 }
 
-singly_node_t *SLL_PopFirst(singly_node_t **head)
+singly_node_t *SLL_PopTop(singly_node_t **head)
 {
-    if (!*head)
+    if (!head || !*head)
         return NULL;
 
     singly_node_t *current_node = *head;
@@ -56,7 +56,7 @@ singly_node_t *SLL_PopFirst(singly_node_t **head)
 
 singly_node_t *SLL_PopBottom(singly_node_t **head)
 {
-    if (!*head)
+    if (!head || !*head)
         return NULL;
 
     // Linked list with one item
@@ -82,9 +82,7 @@ singly_node_t *SLL_PopBottom(singly_node_t **head)
 
 int Linked_List_Lenght(singly_node_t **head)
 {
-    if (head == NULL)
-        return 0;
-    if (*head == NULL)
+    if (!head || !*head)
         return 0;
 
     singly_node_t *temp = *head;
@@ -101,16 +99,15 @@ int Linked_List_Lenght(singly_node_t **head)
 
 singly_node_t *SLL_Remove(singly_node_t **head, int index)
 {
-    if (head == NULL)
-        return 0;
-    if (*head == NULL)
-        return 0;
+    if (!head || !*head)
+        return NULL;
+
     singly_node_t *current_node = *head;
     singly_node_t *previous_node = *head;
 
     if (index == 0)
     {
-        return SLL_PopFirst(head);
+        return SLL_PopTop(head);
     }
 
     for (int i = 0; i < index; ++i)
