@@ -89,18 +89,90 @@ CUNIT_TEST(Test_PopBottomFromTwoItems)
     singly_node_t *popped_node = SLL_PopBottom(&temp_list);
 
     // 3. expectation
-    CUNIT_STRING_EQ(item_2, (char*)popped_node->data); // check the popped item
-    CUNIT_STRING_EQ(item_1, (char*)temp_list->data);   // check the remaining
+    CUNIT_STRING_EQ(item_2, (char *)popped_node->data); // check the popped item
+    CUNIT_STRING_EQ(item_1, (char *)temp_list->data);   // check the remaining
 }
 
 #pragma endregion
 
 #pragma region TEST_REMOVE_ITEM
 
+CUNIT_TEST(Test_RemoveFromEmptyList)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+
+    // 2. stimolate
+    singly_node_t *removed_node = SLL_Remove(&temp_list, 0);
+
+    // 3. expectation
+    CUNIT_IS_NULL(temp_list);    // check if the list is empty
+    CUNIT_IS_NULL(removed_node); // check if the removed node is empty
+}
+
+CUNIT_TEST(Test_RemoveOutOfRangeItem)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item_1 = "Hello World";
+    SLL_Append(&temp_list, (char *)item_1, sizeof(temp_list));
+
+    // 2. stimolate
+    singly_node_t *removed_node = SLL_Remove(&temp_list, 2);
+
+    // 3. expectation
+    CUNIT_IS_NULL(removed_node); // check if the removed node is empy
+
+    const char *actual_value = temp_list->data;
+    const char *expected_value = item_1;
+    CUNIT_STRING_EQ(expected_value, actual_value); // check is the remaining item is invariate
+}
+
+CUNIT_TEST(Test_RemoveFromOneItemList)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item_1 = "Hello World";
+    SLL_Append(&temp_list, (char *)item_1, sizeof(temp_list));
+
+    // 2. stimolate
+    singly_node_t *removed_node = SLL_Remove(&temp_list, 0);
+
+    // 3. expectation
+    CUNIT_IS_NULL(temp_list); // check if the list is empty
+
+    const char *actual_value = removed_node->data;
+    const char *expected_value = item_1;
+    CUNIT_STRING_EQ(expected_value, actual_value); // check is the removed item is correct
+}
+
+CUNIT_TEST(Test_RemoveFromTwoItemList)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item_1 = "Hello World";
+    const char *item_2 = "Hello Spank";
+    SLL_Append(&temp_list, (char *)item_1, sizeof(temp_list));
+    SLL_Append(&temp_list, (char *)item_2, sizeof(temp_list));
+
+    // 2. stimolate
+    singly_node_t *removed_1_node = SLL_Remove(&temp_list, 0);
+    singly_node_t *removed_2_node = SLL_Remove(&temp_list, 0);
+
+    // 3. expectation
+    CUNIT_IS_NULL(temp_list); // check if the list is empty
+
+    const char *actual_value = removed_1_node->data;
+    const char *expected_value = item_1;
+    CUNIT_STRING_EQ(expected_value, actual_value); // check is the removed item is correct
+    actual_value = removed_2_node->data;
+    expected_value = item_2;
+    CUNIT_STRING_EQ(expected_value, actual_value); // check is the removed 2 item is correct
+}
+
 #pragma endregion
 
-
-CUNIT_RUNNER(Test_AppendOneItem, Test_AppendMoreItem, Test_PopBottomFromOneItem, Test_PopBottomFromNullList, Test_PopBottomFromTwoItems);
+CUNIT_RUNNER(Test_AppendOneItem, Test_AppendMoreItem, Test_PopBottomFromOneItem, Test_PopBottomFromNullList, Test_PopBottomFromTwoItems, Test_RemoveFromEmptyList, Test_RemoveOutOfRangeItem, Test_RemoveFromOneItemList, Test_RemoveFromTwoItemList);
 // int main()
 // {
 //     // singly_node_t * head = NULL;

@@ -18,8 +18,9 @@ enum Type
 
 int SLL_Append(singly_node_t **head, void *item, size_t struct_type);
 singly_node_t *SLL_PopBottom(singly_node_t **head);
+singly_node_t *SLL_Remove(singly_node_t **head, int index);
 
-struct Node
+    struct Node
 {
     singly_node_t *linked_node;
     void *data;

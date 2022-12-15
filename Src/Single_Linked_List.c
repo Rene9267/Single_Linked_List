@@ -80,41 +80,49 @@ singly_node_t *SLL_PopBottom(singly_node_t **head)
     return current_node;
 }
 
-singly_node_t *Remove(singly_node_t **head, int index)
+int Linked_List_Lenght(singly_node_t **head)
 {
+    if (head == NULL)
+        return 0;
+    if (*head == NULL)
+        return 0;
+
+    singly_node_t *temp = *head;
+    int lenght = -1;
+    while (temp)
+    {
+        lenght++;
+        if (!temp->linked_node)
+            return lenght;
+        temp = temp->linked_node;
+    }
+    return lenght;
+}
+
+singly_node_t *SLL_Remove(singly_node_t **head, int index)
+{
+    if (head == NULL)
+        return 0;
+    if (*head == NULL)
+        return 0;
     singly_node_t *current_node = *head;
     singly_node_t *previous_node = *head;
+
     if (index == 0)
     {
-        SLL_PopFirst(head);
-        return current_node;
+        return SLL_PopFirst(head);
     }
 
-    for (int i = 0; i < index; i++)
+    for (int i = 0; i < index; ++i)
     {
         previous_node = current_node;
         current_node = current_node->linked_node;
         if (!current_node)
-        {
-            printf("Index out of range");
             return NULL;
-        }
     }
 
     previous_node->linked_node = current_node->linked_node;
     return current_node;
-}
-
-int Linked_List_Lenght(singly_node_t **head)
-{
-    singly_node_t *temp = *head;
-    int lenght = 1;
-    while (temp->linked_node)
-    {
-        lenght++;
-        temp = temp->linked_node;
-    }
-    return lenght;
 }
 
 singly_node_t *Revert(singly_node_t **head)
