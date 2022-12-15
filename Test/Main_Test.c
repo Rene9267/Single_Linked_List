@@ -275,4 +275,24 @@ CUNIT_TEST(Test_GetTailTwoItem)
 
 #pragma endregion
 
+#pragma region TEST_LIST_LENGHT
+
+CUNIT_TEST(Test_LenghPopulatedList)
+{
+    // 1. Setup scenario
+    singly_node_t * temp_list = NULL;
+    const char *item = "Hello World";
+    const char *item2 = "Hello Spank";
+    SLL_Append(&temp_list, (char *)item, sizeof(temp_list));
+    SLL_Append(&temp_list, (char *)item2, sizeof(temp_list));
+    
+    // 2. stimolate
+    int list_lengt = SLL_Lenght(&temp_list);
+
+    // 3. expectation
+    int actual_value = list_lengt;
+    int expected_value = 1;
+}
+
+#pragma endregion
 CUNIT_RUNNER(Test_GetTailEmpty, Test_GetTailTwoItem, Test_GetTailOneItem, Test_AppendOneItem, Test_AppendMoreItem, Test_PopBottomFromOneItem, Test_PopBottomFromTwoItems, Test_RemoveFromEmptyList, Test_PoTopFromOneItem, Test_RemoveOutOfRangeItem, Test_RemoveFromOneItemList, Test_PopTopFromNullList, Test_RemoveFromTwoItemList, Test_PopTopFromTwoItems, Test_PopBottomFromNullList);

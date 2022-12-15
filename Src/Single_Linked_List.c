@@ -59,7 +59,6 @@ singly_node_t *SLL_PopBottom(singly_node_t **head)
     if (!head || !*head)
         return NULL;
 
-    // Linked list with one item
     singly_node_t *current_node = *head;
     if (!current_node->linked_node)
     {
@@ -68,7 +67,6 @@ singly_node_t *SLL_PopBottom(singly_node_t **head)
         return current_node;
     }
 
-    // Linked list with 2 or more items
     singly_node_t *previous_node = *head;
     while (current_node->linked_node)
     {
@@ -80,7 +78,7 @@ singly_node_t *SLL_PopBottom(singly_node_t **head)
     return current_node;
 }
 
-int Linked_List_Lenght(singly_node_t **head)
+int SLL_Lenght(singly_node_t **head)
 {
     if (!head || !*head)
         return 0;
@@ -127,7 +125,7 @@ singly_node_t *Revert(singly_node_t **head)
     singly_node_t **copy_node = head;
     singly_node_t *new_linked = NULL;
     singly_node_t *popped_item;
-    int prova = Linked_List_Lenght(head);
+    int prova = SLL_Lenght(head);
 
     for (size_t i = 0; i < prova; i++)
     {
