@@ -1,7 +1,7 @@
 #include <SLL_Cunit.h>
 #include <Singly_Linked_List.h>
 
-#pragma region TEST_APPEND_ITEMS
+#pragma region TEST_APPEND_ITEM
 
 CUNIT_TEST(Test_AppendOneItem)
 {
@@ -44,9 +44,63 @@ CUNIT_TEST(Test_AppendMoreItem)
 
 #pragma endregion
 
+#pragma region TEST_POP_ITEM
+
+CUNIT_TEST(Test_PopBottomFromOneItem)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item = "Hello World";
+    SLL_Append(&temp_list, (char *)item, sizeof(singly_node_t));
+
+    // 2. stimolate
+    singly_node_t *popped_node = SLL_PopBottom(&temp_list);
+
+    // 3. expectation
+    const char *actual_value = popped_node->data;
+    const char *expected_value = item;
+    CUNIT_STRING_EQ(expected_value, actual_value); // check if remove correct item
+    CUNIT_IS_NULL(temp_list);                      // check if the list is empty
+}
+
+CUNIT_TEST(Test_PopBottomFromNullList)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+
+    // 2. stimolate
+    singly_node_t *popped_node = SLL_PopBottom(&temp_list);
+
+    // 3. expectation
+    CUNIT_IS_NULL(temp_list);   // check if the list is empty
+    CUNIT_IS_NULL(popped_node); // check if the popped node is empty
+}
+
+CUNIT_TEST(Test_PopBottomFromTwoItems)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item_1 = "Hello World";
+    const char *item_2 = "Hello Spank";
+    SLL_Append(&temp_list, (char *)item_1, sizeof(singly_node_t));
+    SLL_Append(&temp_list, (char *)item_2, sizeof(singly_node_t));
+
+    // 2. stimolate
+    singly_node_t *popped_node = SLL_PopBottom(&temp_list);
+
+    // 3. expectation
+    CUNIT_STRING_EQ(item_2, (char*)popped_node->data); // check the popped item
+    CUNIT_STRING_EQ(item_1, (char*)temp_list->data);   // check the remaining
+}
+
+#pragma endregion
+
+#pragma region TEST_REMOVE_ITEM
+
+#pragma endregion
 
 
-CUNIT_RUNNER(Test_AppendOneItem, Test_AppendMoreItem);
+CUNIT_RUNNER(Test_AppendOneItem, Test_AppendMoreItem, Test_PopBottomFromOneItem, Test_PopBottomFromNullList, Test_PopBottomFromTwoItems);
 // int main()
 // {
 //     // singly_node_t * head = NULL;

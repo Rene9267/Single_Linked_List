@@ -22,3 +22,9 @@
         return 0;                                   \
     }
 
+#define CUNIT_IS_NULL(actual)                                                                                 \
+    if (actual != NULL)                                                                                       \
+    {                                                                                                         \
+        printf("[%s]: expected [%s] but was [%p]. Errot at line:[%d]", __FUNCTION__, "NULL", actual, __LINE__); \
+        exit(-1);                                                                                             \
+    }

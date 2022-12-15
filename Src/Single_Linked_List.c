@@ -9,12 +9,11 @@
         }                                          \
     }
 
-
 singly_node_t *Get_Tail(singly_node_t **head)
 {
     if (!*head)
         return NULL;
-        
+
     singly_node_t *current_node = *head;
     singly_node_t *last_node = NULL;
     while (current_node)
@@ -43,7 +42,7 @@ int SLL_Append(singly_node_t **head, void *item, size_t struct_type)
     return 1;
 }
 
-singly_node_t *Pop_First(singly_node_t **head)
+singly_node_t *SLL_PopFirst(singly_node_t **head)
 {
     if (!*head)
         return NULL;
@@ -55,20 +54,29 @@ singly_node_t *Pop_First(singly_node_t **head)
     return current_node;
 }
 
-singly_node_t *Pop_Last(singly_node_t **head)
+singly_node_t *SLL_PopBottom(singly_node_t **head)
 {
     if (!*head)
         return NULL;
 
-    singly_node_t *previous_node = *head;
+    // Linked list with one item
     singly_node_t *current_node = *head;
+    if (!current_node->linked_node)
+    {
+        *head = (*head)->linked_node;
+        current_node->linked_node = NULL;
+        return current_node;
+    }
+
+    // Linked list with 2 or more items
+    singly_node_t *previous_node = *head;
     while (current_node->linked_node)
     {
         previous_node = current_node;
         current_node = current_node->linked_node;
     }
-    previous_node->linked_node = NULL;
 
+    previous_node->linked_node = NULL;
     return current_node;
 }
 
@@ -78,7 +86,7 @@ singly_node_t *Remove(singly_node_t **head, int index)
     singly_node_t *previous_node = *head;
     if (index == 0)
     {
-        Pop_First(head);
+        SLL_PopFirst(head);
         return current_node;
     }
 
@@ -118,7 +126,7 @@ singly_node_t *Revert(singly_node_t **head)
 
     for (size_t i = 0; i < prova; i++)
     {
-        SLL_Append(&new_linked, (struct list_node *)Pop_Last(head)->data, sizeof(singly_node_t));
+        SLL_Append(&new_linked, (struct list_node *)SLL_PopBottom(head)->data, sizeof(singly_node_t));
     }
     return new_linked;
 }

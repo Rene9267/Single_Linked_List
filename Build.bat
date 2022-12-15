@@ -1,8 +1,8 @@
 @echo off
 
-if exist "bin" (
-    RD /S /Q "bin"
+if exist "Bin" (
+    RD /S /Q "Bin"
 )
 
-MD "bin"
-clang -o Bin\Single_Linked_List.exe -Iinclude Test\Main_Test.c Src\Singly_Linked_List.c
+MD "Bin"
+clang -o Bin\Single_Linked_List.exe -Iinclude Test\Main_Test.c Src\Single_Linked_List.c

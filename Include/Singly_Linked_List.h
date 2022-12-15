@@ -5,8 +5,19 @@
 #include <stdint.h>
 
 typedef struct Node singly_node_t;
-enum Type{ INT, STRING , CHAR, DOBULE, FLOAT , UINT64, LAST_TYPE};
+enum Type
+{
+    INT,
+    STRING,
+    CHAR,
+    DOBULE,
+    FLOAT,
+    UINT64,
+    LAST_TYPE
+};
+
 int SLL_Append(singly_node_t **head, void *item, size_t struct_type);
+singly_node_t *SLL_PopBottom(singly_node_t **head);
 
 struct Node
 {
@@ -14,5 +25,3 @@ struct Node
     void *data;
     enum Type data_type;
 };
-
-
