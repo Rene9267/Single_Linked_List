@@ -35,7 +35,6 @@ int SLL_Append(singly_node_t **head, void *item, size_t struct_type)
     if (!current_node)
     {
         *head = appended_node;
-        // printf("I added an element at the begin :%s\n\n", (char *)item);
         return 0;
     }
     current_node->linked_node = appended_node;
