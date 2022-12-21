@@ -280,12 +280,12 @@ CUNIT_TEST(Test_GetTailTwoItem)
 CUNIT_TEST(Test_LenghPopulatedList)
 {
     // 1. Setup scenario
-    singly_node_t * temp_list = NULL;
+    singly_node_t *temp_list = NULL;
     const char *item = "Hello World";
     const char *item2 = "Hello Spank";
     SLL_Append(&temp_list, (char *)item, sizeof(temp_list));
     SLL_Append(&temp_list, (char *)item2, sizeof(temp_list));
-    
+
     // 2. stimolate
     int list_lengt = SLL_Lenght(&temp_list);
 
@@ -296,4 +296,38 @@ CUNIT_TEST(Test_LenghPopulatedList)
 
 #pragma endregion
 
-CUNIT_RUNNER(Test_GetTailEmpty, Test_GetTailTwoItem, Test_GetTailOneItem, Test_AppendOneItem, Test_AppendMoreItem, Test_PopBottomFromOneItem, Test_PopBottomFromTwoItems, Test_RemoveFromEmptyList, Test_PoTopFromOneItem, Test_RemoveOutOfRangeItem, Test_RemoveFromOneItemList, Test_PopTopFromNullList, Test_RemoveFromTwoItemList, Test_PopTopFromTwoItems, Test_PopBottomFromNullList);
+#pragma region TEST_REVERT
+
+CUNIT_TEST(Test_RevertThreeItemList)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+    const char *item = "Hello World";
+    const char *item2 = "Hello Spank";
+    const char *item3 = "Hello It's Me";
+    SLL_Append(&temp_list, (char *)item, sizeof(temp_list));
+    SLL_Append(&temp_list, (char *)item2, sizeof(temp_list));
+    SLL_Append(&temp_list, (char *)item3, sizeof(temp_list));
+
+    // 2. stimolate
+    singly_node_t *reverted_list = SLL_Revert(&temp_list);
+
+    // 3. expectation
+    // 1) element
+    const char *actual_value = reverted_list->data;
+    const char *expected_value = item3;
+    CUNIT_STRING_EQ(expected_value, actual_value);
+
+    // 2) element
+    actual_value = reverted_list->linked_node->data;
+    expected_value = item2;
+    CUNIT_STRING_EQ(expected_value, actual_value);
+
+    // 3) element
+    actual_value = reverted_list->linked_node->linked_node->data;
+    expected_value = item;
+    CUNIT_STRING_EQ(expected_value, actual_value);
+}
+
+#pragma endregion
+CUNIT_RUNNER(Test_GetTailEmpty, Test_RevertThreeItemList, Test_GetTailTwoItem, Test_GetTailOneItem, Test_AppendOneItem, Test_AppendMoreItem, Test_PopBottomFromOneItem, Test_PopBottomFromTwoItems, Test_RemoveFromEmptyList, Test_PoTopFromOneItem, Test_RemoveOutOfRangeItem, Test_RemoveFromOneItemList, Test_PopTopFromNullList, Test_RemoveFromTwoItemList, Test_PopTopFromTwoItems, Test_PopBottomFromNullList);

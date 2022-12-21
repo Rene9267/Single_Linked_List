@@ -119,16 +119,22 @@ singly_node_t *SLL_Remove(singly_node_t **head, int index)
     return current_node;
 }
 
-singly_node_t *Revert(singly_node_t **head)
+singly_node_t *SLL_Revert(singly_node_t **head)
 {
-    singly_node_t **copy_node = head;
-    singly_node_t *new_linked = NULL;
-    singly_node_t *popped_item;
-    int prova = SLL_Lenght(head);
+    if (!head || !*head)
+        return NULL;
+        
+    singly_node_t *copy_node = *head;
+    singly_node_t *next_node = NULL;
+    singly_node_t *prev_node = NULL;
 
-    for (size_t i = 0; i < prova; i++)
+    while (copy_node)
     {
-        SLL_Append(&new_linked, (struct list_node *)SLL_PopBottom(head)->data, sizeof(singly_node_t));
+        next_node = copy_node->linked_node;
+        copy_node->linked_node = prev_node;
+        prev_node = copy_node;
+        copy_node = next_node;
     }
-    return new_linked;
+    copy_node = prev_node;
+    return copy_node;
 }

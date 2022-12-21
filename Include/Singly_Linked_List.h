@@ -22,6 +22,7 @@ singly_node_t *SLL_Remove(singly_node_t **head, int index);
 singly_node_t *SLL_PopTop(singly_node_t **head);
 singly_node_t *SLL_GetTail(singly_node_t **head);
 int SLL_Lenght(singly_node_t **head);
+singly_node_t *SLL_Revert(singly_node_t **head);
 
 struct Node
 {
