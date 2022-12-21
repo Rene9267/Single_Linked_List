@@ -277,6 +277,19 @@ CUNIT_TEST(Test_GetTailTwoItem)
 
 #pragma region TEST_LIST_LENGHT
 
+CUNIT_TEST(Test_LenghEmptyList)
+{
+    // 1. Setup scenario
+    singly_node_t *temp_list = NULL;
+
+    // 2. stimolate
+    int list_lengt = SLL_Lenght(&temp_list);
+
+    // 3. expectation
+    int actual_value = list_lengt;
+    int expected_value = 1;
+}
+
 CUNIT_TEST(Test_LenghPopulatedList)
 {
     // 1. Setup scenario
