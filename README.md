@@ -14,7 +14,7 @@ Implementing the Single Linked List structure for C language
 ```
 
 SLL_Lenght(singly_node_t **head)
-  - Return the lenght of the given List
+  - Return the lenght of the given list
   
 SLL_PopTop(singly_node_t **head)
   - Removes the first element in the list and return it
