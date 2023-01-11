@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 typedef struct Node singly_node_t;
+
 enum Type
 {
     INT,
