@@ -6,3 +6,4 @@ if exist "Bin" (
 
 MD "Bin"
 clang -o Bin\Single_Linked_List.exe -Iinclude Test\*.c Src\*.c
+.\Bin\Single_Linked_List.exe
